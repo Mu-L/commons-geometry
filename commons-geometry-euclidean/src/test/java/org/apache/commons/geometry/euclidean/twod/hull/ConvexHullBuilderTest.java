@@ -49,7 +49,7 @@ class ConvexHullBuilderTest {
     private UniformRandomProvider random;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         // by default, do not include collinear points
         generator = createConvexHullGenerator(false);
         random = RandomSource.XO_SHI_RO_256_PP.create(10);
@@ -74,7 +74,7 @@ class ConvexHullBuilderTest {
         // act/assert
         ConvexHull2D.Builder builder = new ConvexHull2D.Builder(true, Precision.doubleEquivalenceOfEpsilon(1));
         builder.append(points);
-        Assertions.assertThrows(IllegalStateException.class, () ->  builder.build());
+        Assertions.assertThrows(IllegalStateException.class, builder::build);
     }
 
     @Test
@@ -570,11 +570,9 @@ class ConvexHullBuilderTest {
                     .addProduct(-d1.getY(), d2.getX()).getAsDouble();
             final int cmp = Precision.compareTo(cross, 0.0, TEST_EPS);
 
-            if (sign != 0 && cmp != sign) {
-                if (!includesCollinearPoints || cmp != 0) {
-                    // in case of collinear points the cross product will be zero
-                    return false;
-                }
+            if (sign != 0 && cmp != sign && (!includesCollinearPoints || cmp != 0)) {
+                // in case of collinear points the cross product will be zero
+                return false;
             }
 
             sign = cmp;

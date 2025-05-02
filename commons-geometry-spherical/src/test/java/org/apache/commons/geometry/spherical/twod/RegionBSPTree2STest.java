@@ -344,10 +344,10 @@ class RegionBSPTree2STest {
     void testToConvex_doubleLune_complement() {
         // arrange
         final RegionBSPTree2S tree = GreatArcPath.builder(TEST_PRECISION)
-                .append(EQUATOR.arc(0,  Math.PI))
-                .append(X_MERIDIAN.arc(Math.PI, 0))
-                .append(EQUATOR.reverse().arc(0, Math.PI))
-                .append(X_MERIDIAN.reverse().arc(Math.PI, 0))
+                .append(EQUATOR.arc(Math.PI, 0))
+                .append(X_MERIDIAN.arc(0, Math.PI))
+                .append(EQUATOR.reverse().arc(Math.PI, 0))
+                .append(X_MERIDIAN.reverse().arc(0, Math.PI))
                 .build()
                 .toTree();
 
@@ -642,8 +642,8 @@ class RegionBSPTree2STest {
         // assert
         // compute the area, adjusting the first computation for the fact that the triangles comprising the
         // outer diamond have lengths greater than pi/2
-        final double nonComplementedArea = 4 * ((Math.PI - rightTriangleArea(outerRadius, outerRadius) -
-                rightTriangleArea(midRadius, midRadius) + rightTriangleArea(innerRadius, innerRadius)));
+        final double nonComplementedArea = 4 * (Math.PI - rightTriangleArea(outerRadius, outerRadius) -
+                rightTriangleArea(midRadius, midRadius) + rightTriangleArea(innerRadius, innerRadius));
         final double area = (4 * Math.PI) - nonComplementedArea;
         Assertions.assertEquals(area, tree.getSize(), TEST_EPS);
 
